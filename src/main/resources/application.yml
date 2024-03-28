@@ -14,3 +14,7 @@ spring:
         max-idle: 100
         max-total: 1000
     timeout: 5000
+logging:
+  level:
+    com.javademo.feign: debug
+  config: classpath:log4j2.xml
