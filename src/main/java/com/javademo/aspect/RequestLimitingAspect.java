@@ -1,6 +1,7 @@
 package com.javademo.aspect;
 
 import com.javademo.annotation.RequestLimiting;
+import com.javademo.execption.JavaDemoException;
 import lombok.extern.slf4j.Slf4j;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
@@ -61,7 +62,7 @@ public class RequestLimitingAspect {
         Long count = zSetOperations.zCard(key);
         if (count > limitCount) {
             log.warn("用户IP[" + ip + "]访问地址[" + uri + "]超过了限定的次数[" + limitCount + "]");
-            throw new RuntimeException("请求过于频繁，请稍后再试");
+            throw new JavaDemoException(500, "请求过于频繁，请稍后再试");
         }
 
         return joinPoint.proceed();
