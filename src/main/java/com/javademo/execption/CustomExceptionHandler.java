@@ -8,11 +8,19 @@ package com.javademo.execption;
  **/
 
 import com.javademo.util.JsonData;
+import org.mybatis.spring.MyBatisSystemException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.jdbc.BadSqlGrammarException;
+import org.springframework.web.bind.MissingServletRequestParameterException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseBody;
+
+import javax.servlet.http.HttpServletRequest;
+import java.sql.SQLException;
+
+import static jdk.nashorn.internal.runtime.regexp.joni.Config.log;
 
 /**
  * 异常处理类
@@ -22,24 +30,34 @@ public class CustomExceptionHandler {
 
     private static final Logger logger = LoggerFactory.getLogger(CustomExceptionHandler.class);
 
-    @ExceptionHandler(value = Exception.class)
+    @ExceptionHandler(MyBatisSystemException.class)
+    public JsonData handleMyBatisSystemException(HttpServletRequest request, MyBatisSystemException e) {
+        logger.error(">>> Handle MyBatisSystemException, url is {}", request.getRequestURI(), e);
+        return JsonData.buildError(1007, "数据库访问异常");
+    }
+
+    @ExceptionHandler(MissingServletRequestParameterException.class)
+    public JsonData handleMissingServletRequestParameterException(HttpServletRequest request, MissingServletRequestParameterException e) {
+        logger.error(">>> Handle MissingServletRequestParameterException, url is {}", request.getRequestURI(), e);
+        return JsonData.buildError(2002, "缺少必填参数");
+    }
+
+    @ExceptionHandler(BadSqlGrammarException.class)
+    public JsonData handleSQLException(HttpServletRequest request, SQLException e) {
+        logger.error(">>> Handle SQLException, url is {}", request.getRequestURI(), e);
+        return JsonData.buildError(1008, "数据库语句异常");
+    }
+
+    @ExceptionHandler(value = JavaDemoException.class)
     @ResponseBody
-    public JsonData handle(Exception e){
+    public JsonData handle(HttpServletRequest request, JavaDemoException e){
 
-        logger.error("[ 系统异常 ]{}",e.getMessage());
+        String message = e.getCause() != null ? e.getCause().getMessage() : e.getMessage();
+        message = message.replaceAll("Response Error,status:\"(\\S+)\",msg：\"(\\S+)\",error:(\\S+)", "$2");
 
-        if( e instanceof JavaDemoException ){
+        logger.error(">>> Handle JavaDemoException, url is {}, msg is {}", request.getRequestURI(), message);
 
-            JavaDemoException javaDemoException = (JavaDemoException) e;
-
-            return JsonData.buildError(javaDemoException.getCode(), javaDemoException.getMsg());
-
-        }else {
-
-            return JsonData.buildError("全局异常，未知错误");
-
-        }
-
+        return JsonData.buildError(e.getCode(), message);
 
     }
 

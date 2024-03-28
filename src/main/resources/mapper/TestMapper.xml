@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.javademo.mapper.TestMapper">
+
+    <!--获取系统所有的应用ID-->
+    <select id="queryAll" resultType="java.util.Map">
+        SELECT * FROM `app_designer_file` WHERE `ent_id` = 'zhanglinsongceshi2' limit 10;
+    </select>
+</mapper>
