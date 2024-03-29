@@ -13,8 +13,6 @@ j
 :src/main/java/com/javademo/annotation/RequestLimiting.java,c/8/c8bd870dc3361ddfb02173f245e0439e9ad4e7c2
 x
 Hsrc/main/java/com/javademo/controller/RequestLimitingTestController.java,d/c/dc5e6b7077201cc1b5a7afbe1d4894ca5e4a1e37
-H
-logs/java-demo-error.log,1/b/1b98cbc89df2ec13bf26423c1fff4f59a3e64392
 G
 logs/java-demo-info.log,7/1/71aa09cea5ee53bb28b12642c88be80357a89ca2
 l
