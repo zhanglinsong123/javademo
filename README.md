@@ -1,20 +1,23 @@
-# Java示例
+# Java示例项目
 
-这个存储库包含一个Java示例项目，展示了Java编程语言及其相关技术的各种功能和特性。
+这个存储库包含了一个Java示例项目，用于展示Java编程语言的各种功能和用法。
 
-## 功能
+## 项目结构
 
-- **Spring Boot 应用程序：** 演示了使用Spring Boot框架构建强大和可伸缩的Java应用程序的方法。
-- **RESTful API：** 包括用于执行CRUD操作和其他功能的RESTful API端点。
-- **测试：** 使用JUnit和其他测试框架覆盖单元测试和集成测试。
-- **依赖管理：** 利用Maven进行依赖管理和项目构建自动化。
-- **日志记录：** 使用Log4j或其他日志记录框架配置日志记录。
-- **数据库访问：** 展示了使用Spring Data JPA或JDBC模板与MySQL、PostgreSQL或其他数据库交互的示例。
-- **缓存：** 演示了使用Spring Cache或其他缓存库的缓存策略。
-- **消息传递：** 使用Spring Messaging或其他消息传递框架集成消息队列的示例。
-- **外部API：** 集成了外部API以获取数据或执行操作。
+- **src/main/java:** 主要的Java源代码目录。
+- **src/test/java:** 测试代码目录，包含单元测试和集成测试。
+- **pom.xml:** Maven项目的配置文件，用于管理依赖和构建项目。
 
-## 用法
+## 功能特点
+
+- **Spring Boot应用程序：** 使用Spring Boot框架构建的Java应用程序，实现了RESTful API、Web应用等功能。
+- **数据库操作：** 使用Spring Data JPA或MyBatis等工具进行数据库访问和操作。
+- **测试覆盖：** 包括了JUnit和Mockito等测试框架，覆盖了各个模块的单元测试和集成测试。
+- **日志记录：** 集成了Log4j或Slf4j等日志框架，记录应用程序的运行日志。
+- **外部API调用：** 使用Feign或RestTemplate等工具进行外部API的调用和数据交换。
+- **异步任务：** 使用CompletableFuture或Spring的异步任务执行器处理异步任务和多线程操作。
+
+## 快速开始
 
 1. 克隆存储库：
 
