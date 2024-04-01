@@ -23,3 +23,7 @@
 
    ```bash
    git clone https://github.com/zhanglinsong123/javademo.git
+
+## 贡献
+欢迎贡献代码和提出改进建议。如果您发现了Bug或有任何功能建议，请在GitHub上提出问题或创建拉取请求。
+
