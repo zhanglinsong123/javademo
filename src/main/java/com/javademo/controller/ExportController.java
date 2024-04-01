@@ -25,6 +25,9 @@ public class ExportController {
     @Autowired
     private ExportService exportService;
 
+    @Autowired
+    private AsyncUtil asyncUtil;
+
     /**
      * 导出数据
      */
@@ -32,7 +35,7 @@ public class ExportController {
     public JsonData exportData(@RequestBody ExportRequest exportRequest) {
         SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         String key = "exportDateTest:" + format.format(new Date());
-        AsyncUtil.submitTask(key, () -> exportService.exportData(exportRequest, key));
+        asyncUtil.submitTask(key, () -> exportService.exportData(exportRequest, key));
         return JsonData.buildSuccess(key);
     }
 

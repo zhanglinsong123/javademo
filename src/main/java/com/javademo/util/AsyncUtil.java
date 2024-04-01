@@ -8,7 +8,6 @@ import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor;
 import org.springframework.stereotype.Component;
 
-import javax.annotation.Resource;
 import java.util.Optional;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicReference;
@@ -24,16 +23,16 @@ import java.util.function.Supplier;
 @Component
 public class AsyncUtil {
 
-    private static RedisTemplate<String, Object> redisTemplate;
+    private final RedisTemplate<String, Object> redisTemplate;
 
-    private static ThreadPoolTaskExecutor executor;
+    private final ThreadPoolTaskExecutor executor;
 
     public AsyncUtil(RedisTemplate<String, Object> redisTemplate, @Qualifier("exportDataExecutor") ThreadPoolTaskExecutor threadPoolTaskExecutor) {
         this.redisTemplate = redisTemplate;
         this.executor = threadPoolTaskExecutor;
     }
 
-    public static void setTotal(String key, Integer total) {
+    public void setTotal(String key, Integer total) {
         RedisAsyncResultDto result = getResult(key);
         Optional.ofNullable(result).ifPresent(re -> {
             re.setTotal(total);
@@ -41,19 +40,19 @@ public class AsyncUtil {
         });
     }
 
-    private static void saveResult(String key, RedisAsyncResultDto result) {
+    private void saveResult(String key, RedisAsyncResultDto result) {
         setToRedis(key, result);
     }
 
-    private static void setToRedis(String key, RedisAsyncResultDto result) {
+    private void setToRedis(String key, RedisAsyncResultDto result) {
         redisTemplate.opsForValue().set(key, result, 5, TimeUnit.MINUTES);
     }
 
-    public static RedisAsyncResultDto getResult(String key) {
+    public RedisAsyncResultDto getResult(String key) {
         return JSON.parseObject(JSON.toJSONString(redisTemplate.opsForValue().get(key)), RedisAsyncResultDto.class);
     }
 
-    public static void setDone(String key, Integer done) {
+    public void setDone(String key, Integer done) {
         RedisAsyncResultDto result = getResult(key);
         Optional.ofNullable(result).ifPresent(re -> {
             re.setDone(done);
@@ -61,7 +60,7 @@ public class AsyncUtil {
         });
     }
 
-    public static RedisAsyncResultDto submitTask(String key, Supplier<String> supplier) {
+    public RedisAsyncResultDto submitTask(String key, Supplier<String> supplier) {
         AtomicReference<RedisAsyncResultDto> re = new AtomicReference<>(new RedisAsyncResultDto());
         //初始化数据到redis
         re.get().setSuccess(false);

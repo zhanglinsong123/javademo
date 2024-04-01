@@ -31,16 +31,19 @@ public class ExportServiceImpl implements ExportService {
 
     private final RedisTemplate<String, Object> redisTemplate;
 
-    public ExportServiceImpl(TestMapper testMapper, RedisTemplate<String, Object> redisTemplate) {
+    private final AsyncUtil asyncUtil;
+
+    public ExportServiceImpl(TestMapper testMapper, RedisTemplate<String, Object> redisTemplate, AsyncUtil asyncUtil) {
         this.testMapper = testMapper;
         this.redisTemplate = redisTemplate;
+        this.asyncUtil = asyncUtil;
     }
 
     @Override
     public String exportData(ExportRequest exportRequest, String key) {
         List<Map<String, Object>> list = testMapper.queryAll();
         AtomicInteger done = new AtomicInteger();
-        AsyncUtil.setTotal(key, list.size());
+        asyncUtil.setTotal(key, list.size());
         list.forEach(map -> {
             //数据转换，模拟耗时操作
             try {
@@ -49,7 +52,7 @@ public class ExportServiceImpl implements ExportService {
                 log.error("exportData error", e);
             }
             done.getAndIncrement();
-            AsyncUtil.setDone(key, done.get());
+            asyncUtil.setDone(key, done.get());
             log.info("Executing export task in thread: " + Thread.currentThread().getName());
         });
         // 组织到处数据
@@ -62,7 +65,7 @@ public class ExportServiceImpl implements ExportService {
     @Override
     public RedisAsyncResultDto getExportProgress(String key) {
         try {
-            return AsyncUtil.getResult(key);
+            return asyncUtil.getResult(key);
         } catch (Exception e) {
             log.error("getExportProgress error", e);
             throw new JavaDemoException(1001, "获取导出进度失败，可能是key不存在！");

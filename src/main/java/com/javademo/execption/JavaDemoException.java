@@ -13,13 +13,13 @@ import lombok.Setter;
 @Getter
 public class JavaDemoException extends RuntimeException {
 
-    private Integer code;
+    private final Integer code;
 
-    private String msg;
+    private final String message;
 
-    public JavaDemoException(Integer code, String msg){
+    public JavaDemoException(Integer code, String message){
             this.code = code;
-            this.msg = msg;
+            this.message = message;
     }
 
 }

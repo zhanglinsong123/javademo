@@ -30,7 +30,6 @@ public class CompletableFutureTestController {
                 Arrays.asList(1, 2, 3),
                 num -> {
                     try{
-                        Thread.sleep(1000);
                     } catch (Exception e) {
                         log.error("exception", e);
                         throw new JavaDemoException(5001, "执行异常，error:" + e.getMessage());
@@ -39,7 +38,7 @@ public class CompletableFutureTestController {
                     return num;
                 },
                 (e, s) -> {
-                    log.error("发生异常，异常参数：{}，异常原因：{}", s, ((JavaDemoException) e.getCause()).getMsg());
+                    log.error("发生异常，异常参数：{}，异常原因：{}", s, e.getMessage());
                     return -1;
                 }
         );
