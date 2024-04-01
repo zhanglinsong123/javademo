@@ -55,6 +55,7 @@ public class HutoolTreeServiceImpl implements HutoolTreeService {
         extra.put("iconName", entity.getIconName());
         extra.put("level", entity.getLevel());
         extra.put("order", entity.getOrder());
+        extra.put("createdAt", entity.getCreatedAt());
         treeNode.setExtra(extra);
         return treeNode;
     }

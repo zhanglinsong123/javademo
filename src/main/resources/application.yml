@@ -7,8 +7,8 @@ spring:
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
     type: com.zaxxer.hikari.HikariDataSource
-    url: jdbc:mysql://mysql:3306/master?setUnicode=true&characterEncoding=utf8&useSSL=false&zeroDateTimeBehavior=CONVERT_TO_NULL&serverTimezone=Asia/Shanghai
-#    url: jdbc:mysql://mysql:3306/users?setUnicode=true&characterEncoding=utf8&useSSL=false&zeroDateTimeBehavior=CONVERT_TO_NULL&serverTimezone=Asia/Shanghai
+#    url: jdbc:mysql://mysql:3306/master?setUnicode=true&characterEncoding=utf8&useSSL=false&zeroDateTimeBehavior=CONVERT_TO_NULL&serverTimezone=Asia/Shanghai
+    url: jdbc:mysql://mysql:3306/users?setUnicode=true&characterEncoding=utf8&useSSL=false&zeroDateTimeBehavior=CONVERT_TO_NULL&serverTimezone=Asia/Shanghai
     username: master
     password: pZdxysqJX4bK4VrB
     connectionTimeout: 2000
@@ -27,6 +27,11 @@ spring:
         max-total: 1000
     timeout: 5000
 
+  #配置Jackson序列化器按指定的日期格式和时区进行日期的序列化和反序列化
+  jackson:
+    date-format: yyyy-MM-dd HH:mm:ss
+    time-zone: GMT+8
+
 #日志配置
 logging:
   level:
@@ -42,3 +47,5 @@ mybatis:
     log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
     #开启驼峰配置
     map-underscore-to-camel-case: true
+    #自定义 TypeHandler 包路径
+  type-handlers-package: com.javademo.config.mybatis.handler

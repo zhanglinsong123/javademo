@@ -5,6 +5,7 @@ import lombok.Data;
 
 import javax.persistence.Column;
 import javax.persistence.Id;
+import java.util.Date;
 
 @Data
 public class EntAppManageEntity {
@@ -39,5 +40,8 @@ public class EntAppManageEntity {
 
     @Column(name = "app_id" )
     private String appId;
+
+    @Column(name = "created_at")
+    private Date createdAt;
 
 }
