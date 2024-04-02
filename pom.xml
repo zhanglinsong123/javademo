@@ -147,6 +147,13 @@
             <version>${libphonenumber-carrier.version}</version>
         </dependency>
 
+        <!--sensitive-word 基于 DFA 算法实现的高性能敏感词工具-->
+        <dependency>
+            <groupId>com.github.houbb</groupId>
+            <artifactId>sensitive-word</artifactId>
+            <version>${sensitive-word.version}</version>
+        </dependency>
+
     </dependencies>
 
     <properties>
@@ -168,6 +175,7 @@
         <libphonenumber.version>8.7.1</libphonenumber.version>
         <libphonenumber-geocoder.version>2.76</libphonenumber-geocoder.version>
         <libphonenumber-carrier.version>1.66</libphonenumber-carrier.version>
+        <sensitive-word.version>0.13.1</sensitive-word.version>
     </properties>
 
 </project>
