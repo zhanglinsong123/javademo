@@ -27,10 +27,24 @@ spring:
         max-total: 1000
     timeout: 5000
 
+  rabbitmq:
+    host: rabbitmq
+    port: 5672
+    username: anyuan
+    password: anyuan
+    publisher-confirms: true #开启发送确认
+    publisher-returns: true #开启发送失败退回
+    listener:
+      direct:
+        acknowledge-mode: manual #开启消费ACK模式
+      simple:
+        acknowledge-mode: manual
+
   #配置Jackson序列化器按指定的日期格式和时区进行日期的序列化和反序列化
   jackson:
     date-format: yyyy-MM-dd HH:mm:ss
     time-zone: GMT+8
+
 
 #日志配置
 logging:

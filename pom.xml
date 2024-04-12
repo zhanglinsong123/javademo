@@ -152,6 +152,10 @@
             <artifactId>sensitive-word</artifactId>
             <version>${sensitive-word.version}</version>
         </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-amqp</artifactId>
+        </dependency>
 
     </dependencies>
 
