@@ -2,11 +2,8 @@ package com.javademo.algorithm;
 
 import lombok.extern.slf4j.Slf4j;
 import org.junit.Test;
-import org.springframework.util.CollectionUtils;
 
 import java.util.*;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 /**
  * @Program: javademo
@@ -344,6 +341,72 @@ public class LeetCode {
         }
 
         System.out.println(result);
+    }
+
+
+    /**
+     * 无重复字符的最长子串
+     * 给定一个字符串 s ，请你找出其中不含有重复字符的最长子串的长度。
+     * 1. 导入 HashSet 类，以便我们可以使用 HashSet 来记录窗口中的字符。
+     * 2. 创建 Solution 类，并在其中定义一个方法 lengthOfLongestSubstring，该方法接受一个字符串 s 作为输入，并返回最长子串的长度。
+     * 3. 在方法中，我们首先获取字符串 s 的长度，并初始化一个 HashSet 和两个指针 i 和 j。HashSet 用于存储窗口中的字符，i 和 j 分别表示滑动窗口的左边界和右边界，初始时均为 0。
+     * 4. 接下来，我们使用一个 while 循环来遍历字符串。循环条件是 i < n && j < n，确保我们没有越界。
+     * 5. 在循环中，我们首先检查右边界指向的字符是否在 HashSet 中。如果不在，表示当前窗口中的字符是不重复的，我们将该字符加入 HashSet，并将右边界指针 j 向右移动一位。同时，我们更新最长子串的长度 ans，它等于当前窗口的大小 j - i 和之前最长子串的长度中的较大值。
+     * 6. 如果右边界指向的字符已经在 HashSet 中，表示当前窗口中有重复字符，我们需要移动左边界指针 i，直到窗口中不再有重复字符为止。在移动左边界的过程中，我们从 HashSet 中移除左边界指向的字符。
+     * 7. 最终，循环结束后，我们就得到了不含重复字符的最长子串的长度，即 ans。
+     */
+    @Test
+    public void lengthOfLongestSubstring() {
+        String s = "auk";
+
+        int n = s.length();
+        HashSet<Character> set = new HashSet<>();
+        int ans = 0, i = 0, j = 0;
+
+        while (i < n && j < n) {
+            if (!set.contains(s.charAt(j))) {
+                set.add(s.charAt(j++));
+                ans = Math.max(ans, j - i);
+            } else {
+                set.remove(s.charAt(i++));
+            }
+        }
+
+        System.out.println(ans);
+
+    }
+
+    /**
+     * 找到字符串中所有字母异位词
+     * 给定两个字符串 s 和 p，找到 s 中所有 p 的 异位词 的子串，返回这些子串的起始索引。不考虑答案输出的顺序。
+     */
+    @Test
+    public void findAnagrams() {
+        String s = "cbaebabacd";
+        String p = "abc";
+
+        int n = s.length();
+        List<Integer> res = new ArrayList<>();
+        int i = 0;
+        int j = p.length();
+
+        char[] pChars = p.toCharArray();
+        Arrays.sort(pChars);
+
+        while (j <= n) {
+            String substr = s.substring(i, j);
+            char[] substrChars = substr.toCharArray();
+            Arrays.sort(substrChars);
+
+            if (Arrays.equals(substrChars, pChars)) {
+                res.add(i);
+            }
+            j++;
+            i++;
+        }
+
+        System.out.println(res);
+
     }
 
 }
